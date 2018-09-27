@@ -14,6 +14,9 @@ public class NetServer : MonoBehaviour
     public Socket Server;
     public int Port;
 
+    public int TotalRead;
+    public int TotalSent;
+
     public List<Client> Clients;
 
 	void Start ()
@@ -55,6 +58,7 @@ public class NetServer : MonoBehaviour
     {
         Client client = (Client)ar.AsyncState;
         int read = client.Socket.EndReceive(ar);
+        TotalRead += read;
 
         if(client.Socket.Available > 0)
         {
@@ -80,6 +84,7 @@ public class NetServer : MonoBehaviour
     {
         Client client = (Client)ar.AsyncState;
         int sent = client.Socket.EndSend(ar);
+        TotalSent += sent;
         Debug.Log("Data sent");
     }
 }
